@@ -1,4 +1,4 @@
-package com.company.xiaofeifei.java.learning.algorithm.leetCode;
+package com.company.xiaofeifei.java.learning.algorithm.leetcode;
 
 /**
  * 二叉树

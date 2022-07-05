@@ -1,9 +1,12 @@
-package com.company.xiaofeifei.java.learning.algorithm.leetCode;
+package com.company.xiaofeifei.java.learning.algorithm.leetcode;
+
+import com.company.xiaofeifei.java.learning.utils.GsonUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -219,4 +222,162 @@ public class UsualAlgorithm {
             j++;
         }
     }
+
+    public String longestWord(String[] words) {
+        if (words == null || words.length == 0) {
+            return "";
+        }
+        Map<String, Boolean> result = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            result.put(words[i], false);
+            for (int j = 0; j < words.length; j++) {
+                if (i  == j) {
+                    continue;
+                }
+                if (words[i].substring(0, words[i].length() -1).equals(words[j])) {
+                    if (result.get(words[j]) != null && result.get(words[j])) {
+                        result.put(words[i], true);
+                    }
+                }
+            }
+        }
+        System.out.println(GsonUtil.toJson(result));
+        return result.entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .max((x1, x2) -> {
+                    if (x1.getKey().length() != x2.getKey().length()) {
+                        return x1.getKey().compareTo(x2.getKey());
+                    } else {
+                        return x1.getKey().length() - x2.getKey().length();
+                    }
+                }).get().getKey();
+    }
+
+    public boolean findTarget(TreeNode root, int k) {
+        List<Integer> queue = new ArrayList<>();
+        addNum(queue, root);
+        System.out.println(GsonUtil.toJson(queue));
+        for (int i = 0; i < queue.size(); i++) {
+            for (int j = 0; j < queue.size(); j++) {
+                if (i != j && queue.get(j) == k - queue.get(i)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addNum(List<Integer> queue, TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        queue.add(node.val);
+        if (node.left != null) {
+            addNum(queue, node.left);
+        }
+        if (node.right != null) {
+            addNum(queue, node.right);
+        }
+    }
+
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        List<Integer> answerList = new ArrayList<>();
+        Integer num = 0;
+        char[] answerChar = answerKey.toCharArray();
+        char current = answerChar[0];
+        for (char a : answerKey.toCharArray()) {
+            if (a == current) {
+                num++;
+            } else {
+                answerList.add(num);
+                num = 1;
+                current = a;
+            }
+        }
+        answerList.add(num);
+        return 0;
+    }
+
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = left; i <= right; i++) {
+            int number = Integer.valueOf(i);
+            boolean canDividing = true;
+            while (true) {
+                int num = number % 10;
+                if (num != 0) {
+                    if (i % num == 0) {
+                        if (number < 10) {
+                            break;
+                        }
+                        number = number / 10;
+                    } else {
+                        canDividing = false;
+                        break;
+                    }
+                } else {
+                    canDividing = false;
+                    break;
+                }
+            }
+            if (canDividing) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+    public boolean canReorderDoubled(int[] arr) {
+        List<Integer> arrList = new ArrayList<>(arr.length);
+        Map<Integer, Integer> mapNum = new HashMap<>();
+        for (int num1 : arr) {
+            arrList.add(num1);
+            mapNum.put(num1, mapNum.getOrDefault(num1, 0) + 1);
+        }
+        arrList.sort((x1, x2) -> {
+                    if (x1 < 0 && x2 < 0) {
+                        return x2 - x1;
+                    } else {
+                        return x1 - x2;
+                    }
+                }
+        );
+        System.out.println(arrList);
+        System.out.println(mapNum);
+        Iterator<Integer> integerIterable = arrList.iterator();
+        while (integerIterable.hasNext()) {
+            Integer num = integerIterable.next();
+            Integer numCount = mapNum.get(num);
+            Integer doubleNumCount = mapNum.getOrDefault(num * 2, numCount + 1);
+            if (doubleNumCount > numCount) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int[] plusOne(int[] digits) {
+        int plus = 1;
+        for(int i = digits.length - 1 ; i >= 0; i--) {
+            int result = digits[i] + plus;
+            if (result >= 10) {
+                digits[i] = result - 10;
+                plus = 1;
+            } else {
+                plus = 0;
+                digits[i] = result;
+            }
+        }
+        if (plus > 0) {
+            int[] lastResult = new int[digits.length + 1];
+            lastResult[0] = 1;
+            for (int i = 1; i < lastResult.length; i++) {
+                lastResult[i] = digits[i - 1];
+            }
+            return lastResult;
+        } else {
+            return digits;
+        }
+    }
+
 }

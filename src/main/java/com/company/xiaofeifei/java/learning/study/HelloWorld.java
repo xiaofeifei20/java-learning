@@ -2,6 +2,7 @@ package com.company.xiaofeifei.java.learning.study;
 
 import com.company.xiaofeifei.java.learning.entity.Person;
 import com.google.common.collect.Lists;
+import com.xiaomi.cnzone.sampleapi.api.monitor.SampleMonitorProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +27,25 @@ public class HelloWorld {
         byte[] i = new byte[50 * size];
     }
 
-    public static void main(String[] args) {
+    public static void main0(String[] args) {
         Person p1 = new Person("小李");
         Person p2 = new Person("小张");
         HelloWorld.swap(p1, p2);
         log.info(p1.getName());
         log.info(p2.getName());
+
+        int n1 = 8;
+        int n = n1 - 1;
+        n |= n >>> 1;
+        System.out.println(n);
+        n |= n >>> 2;
+        System.out.println(n);
+        n |= n >>> 4;
+        System.out.println(n);
+        n |= n >>> 8;
+        System.out.println(n);
+        n |= n >>> 16;
+        System.out.println(n);
     }
 
     public static void swap(Person p1, Person p2) {
@@ -53,5 +67,19 @@ public class HelloWorld {
 
         System.out.println(family);
 
+    }
+
+    public static void main(String[] args) {
+        int i = -2;
+        System.out.println("before, i = " + Integer.toBinaryString(i));
+        int r = Integer.signum(i);
+        System.out.println("result = " + r);
+        System.out.println("---------");
+        int s1 = i >> 31;
+        int s2 = -i >>> 31;
+        System.out.println(Integer.toBinaryString(s1));
+        System.out.println(Integer.toBinaryString(s2));
+        System.out.println(s1 | s2);
+        System.out.println("---------");
     }
 }
