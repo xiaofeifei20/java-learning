@@ -14,11 +14,8 @@ public class Draft {
     public static void main(String[] args) {
         UsualAlgorithm algorithm = new UsualAlgorithm();
 
-        System.out.println(Arrays.toString(algorithm.plusOne(new int[]{1, 2, 3})));
-        System.out.println(Arrays.toString(algorithm.plusOne(new int[]{4, 3, 2, 1})));
-        System.out.println(Arrays.toString(algorithm.plusOne(new int[]{9})));
-        System.out.println(Arrays.toString(algorithm.plusOne(new int[]{9, 9})));
-        System.out.println(Arrays.toString(algorithm.plusOne(new int[]{1, 9, 9})));
+        char[][] data = {{'.','8','7','6','5','4','3','2','1'},{'2','.','.','.','.','.','.','.','.'},{'3','.','.','.','.','.','.','.','.'},{'4','.','.','.','.','.','.','.','.'},{'5','.','.','.','.','.','.','.','.'},{'6','.','.','.','.','.','.','.','.'},{'7','.','.','.','.','.','.','.','.'},{'8','.','.','.','.','.','.','.','.'},{'9','.','.','.','.','.','.','.','.'}};
+        System.out.println(algorithm.isValidSudoku(data));
     }
 
 }

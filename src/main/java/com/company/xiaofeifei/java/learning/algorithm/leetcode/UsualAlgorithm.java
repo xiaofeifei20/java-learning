@@ -1,6 +1,7 @@
 package com.company.xiaofeifei.java.learning.algorithm.leetcode;
 
 import com.company.xiaofeifei.java.learning.utils.GsonUtil;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -378,6 +379,62 @@ public class UsualAlgorithm {
         } else {
             return digits;
         }
+    }
+
+    public void moveZeroes(int[] nums) {
+        int tpm = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                tpm++;
+            } else {
+                nums[i - tpm] = nums[i];
+            }
+        }
+        for (int i = 0; i < tpm; i++) {
+            nums[nums.length - i - 1] = 0;
+        }
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            int last = target - nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if (last == nums[j]) {
+                    System.out.println(Arrays.toString(new int[]{i, j}));
+                    return new int[]{i, j};
+                }
+            }
+        }
+        System.out.println(Arrays.toString(new int[]{}));
+        return new int[]{};
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        Map<Integer, List<Integer>> result = new HashMap<>();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                char d = board[i][j];
+                if (d == '.') {
+                    continue;
+                }
+                Integer data = Integer.valueOf(String.valueOf(d));
+                List<Integer> include = null;
+                if (result.containsKey(data)) {
+                    include = result.get(data);
+                } else {
+                    include = new ArrayList();
+                }
+                if (include.contains(i) || include.contains(9 + j) || include.contains(18 + (i / 3) + (j / 3) * 3)) {
+                    return false;
+                }
+                include.add(i);
+                include.add(9 + j);
+                include.add(18 + (i % 2) + (j % 2) * 3);
+                result.put(data, include);
+            }
+        }
+        return true;
     }
 
 }
